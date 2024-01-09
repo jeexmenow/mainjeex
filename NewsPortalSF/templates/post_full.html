@@ -1,0 +1,23 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% block title %}
+{{ post.title }}
+{% endblock title %}
+
+{% block content %}
+<div class="container px-5">
+<div class="card">
+  <div class="card-header">
+    {{ post.created_time | date:'d.m.Y' }}
+    <h2>{{ post.name | censor }}</h2>
+  </div>
+  <div class="card-body mx-3">
+
+    <h5 class="card-title text-center"><b>{{ post.title|censor }}</b></h5>
+    <p class="card-text"><i>{{ post.text|censor }}</i></p>
+
+    <a href="{% url 'post_list' %}" class="btn btn-outline-secondary btn-sm">К списку публикации</a>
+
+  </div>
+</div>
+  </div>{% endblock content %}
