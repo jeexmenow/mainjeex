@@ -1,0 +1,25 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %} Список публикаций {% endblock title %}
+{% block content %}
+<h2>Вы действительно хотите удалить данную публикацию?</h2>
+
+<table>
+    {% for item in news %}
+    <tr>
+         <tr>
+        <td>{{ item.title }}</td>
+        <td>{{ item.created_time | date:'d.m.Y' }}</td>
+        <td>{{ item.text | truncatechars:20 }}</td>
+        <td>
+            {% for category in item.categories.all%}
+            {{ category.name }}</td>
+            {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Подтвердить"></form>
+{% endblock content %}
