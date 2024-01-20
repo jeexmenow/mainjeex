@@ -1,0 +1,19 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+<h2>Страница авторизованного пользователя  <p style="color: green;">{{ request.user.username }}! &#128522;</p></h2>
+<div> Информация о пользователе:</div>
+<table>
+<tr><th>Email: </th>
+<tr><td>{{ request.user.email }}</td>
+</table>
+<table>
+<tr><th> </th>
+<tr><td></td>
+</table>
+
+{% if is_not_authors %}
+<a href="{% url 'upgrade' %}"<button type="button" class="btn btn-primary">Хочу стать автором</button></a>
+{% endif %}
+<a href="/accounts/logout/"><button type="button" class="btn btn-danger">Выйти</button>
+{% endblock %}
