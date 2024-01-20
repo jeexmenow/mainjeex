@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Уведомление</title>
+</head>
+<body>
+    <h2>Здравствуйте! Это статьи за прошедшую неделю, которые вы могли пропустить</h2>
+    <url>
+        {% for news in posts %}
+            <li>{{ news.title }}<a href="{{ link }}/news/{{ news.id}}"></a></li>
+        {% endfor %}
+    </url>
+</body>
+</html>
