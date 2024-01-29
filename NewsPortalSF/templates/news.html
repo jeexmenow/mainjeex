@@ -1,0 +1,63 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% block title %}
+Все публикации
+{% endblock title %}
+{% block content %}
+<style>
+   table, th, td {
+    border: 2px solid black;
+  }
+  </style>
+<h1>Количество публикаций: {{ news | length}}</h1>
+{% if news %}
+<table border="3">
+<tr>
+    <td><em><b>Заголовок</b></em></td>
+    <td><em><b>Дата</b></em></td>
+    <td><em><b>Описание</b></em>(20 символов)</td>
+    <td><em><b>Категории</b></em></td>
+</tr>
+    {% for item in news %}
+    <tr>
+        <td>
+            <a href="{% url 'post_full' item.id %}">{{ item.title | censor }}</a>
+            <a href="{% url 'post_create' item.id %}"><u><button type="button" class="btn btn-primary">Редактировать</button></u></a>
+            <a href="{% url 'post_delete' item.id %}"><u><button type="button" class="btn btn-outline-danger">Удалить</button></u></a>
+        </td>
+        <td>{{ item.created_time | date:'d.m.Y' }}</td>
+        <td>{{ item.text | truncatechars:20 }}</td>
+        <td>
+            {% for category in item.categories.all%}
+            <a href="{% url 'category_list' category.id %}">{{ category }}</a>
+        </td>
+            {% endfor %}
+    </tr>
+    {% endfor %}
+    <h5 class="card-title text-center"><b>{{ post.title|censor }}</b></h5>
+    <p class="card-text"><i>{{ post.text|censor }}</i></p>
+</table>
+{% endif %}
+
+{% if page_obj.has_previous %}
+    <a href="?page=1">1</a>
+    {% if page_obj.previous_page_number != 1 %}
+    ...
+    <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+    {% endif %}
+{% endif %}
+
+{{ page_obj.number }}
+
+{% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">
+        {{ page_obj.next_page_number }}
+    </a>
+    {% if paginator.num_pages != page_obj.next_page_number %}
+    ...
+    <a href="?page={{ page_obj.paginator.num_pages }}">
+        {{ page_obj.paginator.num_pages }}
+    </a>
+    {% endif %}
+{% endif %}
+{% endblock content %}
